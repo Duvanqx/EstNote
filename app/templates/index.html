@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio - EstNote</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='styles/style.css')}}">
+</head>
+
+<body>
+    <div class="contenedor">
+        <header>
+            <div class="menu">
+                <button id="menu-btn" aria-label="Abrir menú">☰</button>
+                <nav id="nav-menu">
+                    <ul>
+                        <li><a href="index">Inicio</a></li>
+                        <li><a href="">Materias</a></li>
+                        <li><a href="">Calificaciones</a></li>
+                        <li><a href="">Acerca de</a></li>
+                        <li><a href="">Ayuda</a></li>
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="logo">
+                <img src="estnotelogo.png" alt="Logo">
+            </div>
+            <div class="usuario">
+                <a href="">Usuario</a>
+            </div>
+        </header>
+
+        <main>
+            <h1>EstNote</h1>
+            <h2>¿Quieres tener una forma fácil y rápida de visualizar tus calificaciones?</h2>
+            {% if usuario %}
+            <h2>Hola,{{ usuario }}</h2>
+            {% else %}
+            <a href="{{ url_for('registro') }}">Registrarse</a><br>
+            <a href="{{ url_for('login') }}">Iniciar Sesión</a>
+            {% endif %}
+
+            <div class="Dividir"></div>
+
+            <p>¿Qué puedes hacer?</p>
+            <ul>
+                <li>Agregar y organizar materias</li>
+                <li>Crear y editar tus calificaciones</li>
+                <li>Ver tus calificaciones finales</li>
+                <li>Ser mas ordenado</li>
+            </ul>
+        </main>
+
+        <script src="{{url_for('static', filename='scripts/script.js')}}"></script>
+
+    </div>
+</body>
+
+</html>

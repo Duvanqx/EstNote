@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="wnameth=device-wnameth, initial-scale=1.0">
+    <title>Registro de usuario EstNote</title>
+</head>
+<body>
+    <div class="contenedor">
+        <div class="logo">
+            <img src="estnotelogo.png" alt="logo">
+            <h2>EstNote</h2>
+        </div>
+
+        <form action="/registro" method="post" class="formulario">
+
+            <label for="nombres">Nombres:</label>
+            <input type="text" name="nombres"><br>
+
+            <label for="apellidos">Apellidos:</label>
+            <input type="text" name="apellidos"><br>
+
+            <label for="institucion">Institución:</label>
+            <input type="text" name="institucion"><br>
+
+            <label for="grado">Grado:</label>
+            <select name="grado" name="grado">
+                <option value="primaria">Primaria</option>
+                <option value="secundaria">Secundaria</option>
+                <option value="universidad">Universidad</option>
+                <option value="postgrado">Postgrado</option>
+            </select><br>
+
+            <label for="telefono">Télefono:</label>
+            <input type="tel" name="telefono"><br>
+
+            <label for="correo">Correo:</label>
+            <input type="email" name="correo" required><br>
+
+            <label for="contraseña">Contraseña:</label>
+            <input type="password" name="contraseña" required><br>
+
+            <div class="boton">
+                <button type="submit">Registrarse</button>
+            </div> 
+        </form>
+        </div>
+    </div>
+</body>
+</html>
