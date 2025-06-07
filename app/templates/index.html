@@ -9,48 +9,58 @@
 </head>
 
 <body>
-    <div class="contenedor">
-        <header>
-            <div class="menu">
-                <button id="menu-btn" aria-label="Abrir menú">☰</button>
-                <nav id="nav-menu">
-                    <ul>
-                        <li><a href="index">Inicio</a></li>
-                        <li><a href="">Materias</a></li>
-                        <li><a href="">Calificaciones</a></li>
-                        <li><a href="">Acerca de</a></li>
-                        <li><a href="">Ayuda</a></li>
-                    </ul>
-                </nav>
-            </div>
+    <div class="contenido">
 
+        <div id="menu" class="menu collapsed">
+            <button id="boton_menu">☰</button>
+            <nav>
+                <ul>
+                    <li><a href="#"><span><img src="{{url_for('static', filename='img/inicio.svg')}}"
+                                    alt="Inicio"></span><span class="text">Inicio</span></a></li>
+                    <li><a href="#"><span><img src="{{url_for('static', filename='img/materias.svg')}}"
+                                    alt="Materias"></span><span class="text">Materias</span></a></li>
+                    <li><a href="#"><span><img src="{{url_for('static', filename='img/calificaciones.svg')}}"
+                                    alt="Calificaciones"></span><span class="text">Calificaciones</span></a></li>
+                    <li><a href="#"><span><img src="{{url_for('static', filename='img/info.svg')}}"
+                                    alt="Acerca de"></span><span class="text">Acerca de</span></a></li>
+                    <li><a href="#"><span><img src="{{url_for('static', filename='img/ayuda.svg')}}"
+                                    alt="Ayuda"></span><span class="text">Ayuda</span></a></li>
+                </ul>
+            </nav>
+        </div>
+
+
+        <header>
             <div class="logo">
-                <img src="estnotelogo.png" alt="Logo">
+                <img src="{{url_for('static', filename='img/estnotelogo.svg')}}" alt="Logo">
             </div>
+            <h1>EstNote</h1>
             <div class="usuario">
-                <a href="">Usuario</a>
+                <a href=""><img src="{{url_for('static', filename='img/usuario.svg')}}" alt=""></a>
             </div>
         </header>
 
         <main>
-            <h1>EstNote</h1>
-            <h2>¿Quieres tener una forma fácil y rápida de visualizar tus calificaciones?</h2>
             {% if usuario %}
-            <h2>Hola,{{ usuario }}</h2>
+            <h2>Hola, {{ usuario }}. ¡Bienvenida a EstNote, la forma más fácil y rápida de visualizar tus calificaciones!</h2>
             {% else %}
-            <a href="{{ url_for('registro') }}">Registrarse</a><br>
-            <a href="{{ url_for('login') }}">Iniciar Sesión</a>
+            <div class="auth-buttons">
+                <h2>¿Quieres tener una forma fácil y rápida de visualizar tus calificaciones?</h2>
+                <a href="{{ url_for('registro') }}">Registrarse</a><br>
+                <a href="{{ url_for('login') }}">Iniciar Sesión</a>
+            </div>
             {% endif %}
 
             <div class="Dividir"></div>
 
-            <p>¿Qué puedes hacer?</p>
+            <p>¿Qué puedes hacer?</Sp>
             <ul>
                 <li>Agregar y organizar materias</li>
                 <li>Crear y editar tus calificaciones</li>
                 <li>Ver tus calificaciones finales</li>
                 <li>Ser mas ordenado</li>
             </ul>
+            <a href="/logout">Cerrar Sesión</a>
         </main>
 
         <script src="{{url_for('static', filename='scripts/script.js')}}"></script>

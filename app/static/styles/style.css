@@ -1,130 +1,287 @@
-/* Reset y fuentes */
+/* ===== Reset y estilos base ===== */
 * {
-    margin: 0;
-    padding: 0;
     box-sizing: border-box;
-    font-family: Arial, sans-serif;
 }
 
 body {
-    background-color: #fff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    background-color: #f5f5f5;
     color: #333;
 }
 
-.contenedor {
+a {
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* ===== Sidebar menú ===== */
+.menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 60px;
+    background-color: #1e1e2f;
+    color: white;
     display: flex;
     flex-direction: column;
-    height: 100vh;
-}
-
-/* Encabezado */
-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #f5f5f5;
-    padding: 10px 20px;
-    border-bottom: 1px solid #ccc;
-}
-
-.menu {
-    display: flex;
-    align-items: center;
-}
-
-#menu-btn {
-    background: none;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-    margin-right: 10px;
-}
-
-#nav-menu {
-    display: none;
-    position: absolute;
-    top: 60px;
-    left: 10px;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    padding: 10px;
+    align-items: stretch;
+    transition: width 0.3s ease;
+    overflow-x: hidden;
     z-index: 1000;
 }
 
-#nav-menu ul {
-    list-style: none;
+.menu.expanded {
+    width: 220px;
 }
 
-#nav-menu ul li {
-    margin: 10px 0;
+/* ===== Botón hamburguesa ===== */
+#boton_menu {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 26px;
+    padding: 20px 20px;
+    cursor: pointer;
+    text-align: left;
+    width: 100%;
+    outline-offset: 2px;
+    transition: background-color 0.2s;
 }
 
-#nav-menu ul li a {
-    text-decoration: none;
-    color: #333;
+#boton_menu:hover {
+    background-color: #2e2e44;
 }
 
-/* Logo */
-.logo img {
-    height: 40px;
-}
-
-/* Usuario */
-.usuario a {
-    text-decoration: none;
-    color: black;
-    font-weight: bold;
-    border: 1px solid #333;
-    padding: 6px 10px;
-    border-radius: 20px;
-}
-
-/* Main */
-main {
+/* ===== Navegación dentro del menú ===== */
+.menu nav {
     flex-grow: 1;
-    padding: 30px 40px;
+    overflow-y: auto;
+}
+
+.menu nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+}
+
+.menu nav ul li a {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 20px;
+    color: #ccc;
+    transition: background-color 0.2s, color 0.2s;
+    border-radius: 4px;
+}
+
+.menu nav ul li a:hover {
+    background-color: #2e2e44;
+    color: white;
+}
+
+/* Iconos SVG dentro de nav */
+.menu nav ul li a span:first-child img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    display: block;
+}
+
+/* Texto del menú solo visible en expanded */
+.menu.collapsed .text {
+    display: none;
+}
+
+/* ===== Contenido principal ===== */
+.contenido {
+    margin-left: 60px;
+    padding: 20px 30px;
+    transition: margin-left 0.3s ease;
+    min-height: 100vh;
+    background-color: #fafafa;
+}
+
+.contenido.mover-contenido {
+    margin-left: 220px;
+}
+
+/* ===== Header ===== */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background-color: white;
+    box-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 900;
+}
+
+.logo img {
+    height: 60px;
+    user-select: none;
+}
+
+.usuario a {
+    display: flex;
+    align-items: center;
+}
+
+.usuario a img {
+    width: 35px;
+    height: 35px;
+    object-fit: contain;
+    border-radius: 50%;
+    border: 2px solid #1e1e2f;
+    transition: border-color 0.3s;
+}
+
+.usuario a:hover img {
+    border-color: #f9d71c;
+}
+
+/* ===== Main content ===== */
+main {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 6px 12px rgb(0 0 0 / 0.1);
+    max-width: 900px;
+    margin: 1.5em auto;
 }
 
 main h1 {
-    color: #f4b400; /* Amarillo tipo Google */
-    font-size: 32px;
-    margin-bottom: 10px;
+    margin-top: 0;
+    font-size: 2.5rem;
+    color: #1e1e2f;
 }
 
 main h2 {
-    font-size: 18px;
-    margin-bottom: 20px;
-}
-
-.Dividir {
-    margin: 20px 0;
-    height: 2px;
-    background-color: #333;
-    width: 100%;
-    max-width: 300px;
+    margin-top: 0.3em;
+    font-weight: 400;
+    color: #444;
+    text-align: center;
 }
 
 main p {
-    font-weight: bold;
-    margin-bottom: 10px;
+    font-weight: 600;
+    font-size: 1.1rem;
 }
 
 main ul {
-    list-style-type: disc;
+    list-style: disc inside;
+    margin: 0;
     padding-left: 20px;
+    color: #555;
 }
 
 main ul li {
-    margin-bottom: 5px;
+    margin-bottom: 8px;
 }
 
-/* Botón de acción (si lo agregas más adelante) */
-.boton-comenzar {
-    background-color: white;
-    color: black;
-    border: 2px solid #333;
-    padding: 5px 15px;
-    font-weight: bold;
-    cursor: pointer;
-    border-radius: 5px;
+.Dividir {
+    height: 2px;
+    background-color: #ddd;
+    margin: 30px 0;
+}
+
+/* Estilo para imagen banner en main */
+.banner {
+    width: 100%;
+    max-width: 600px;
+    display: block;
+    margin: 1.5em auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgb(0 0 0 / 0.1);
+}
+
+/* ===== Scrollbar personalizada para nav  ===== */
+.menu nav::-webkit-scrollbar {
+    width: 6px;
+}
+
+.menu nav::-webkit-scrollbar-thumb {
+    background-color: #444;
+    border-radius: 3px;
+}
+
+.menu nav::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+/* ===== Botones de registro e inicio de sesión ===== */
+.auth-buttons {
+    margin: 20px 0;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.auth-buttons h2 {
+    flex-basis: 100%;
+    text-align: center;
+    margin-bottom: 15px;
+    font-weight: 500;
+    color: #444;
+}
+
+.auth-buttons a {
+    display: inline-block;
+    padding: 12px 28px;
+    background-color: #1e1e2f;
+    color: white;
+    font-weight: 600;
+    font-size: 1.1rem;
+    border-radius: 6px;
+    text-align: center;
+    transition: background-color 0.3s, color 0.3s;
+    box-shadow: 0 4px 6px rgb(0 0 0 / 0.1);
+    user-select: none;
+    min-width: 140px;
+}
+
+.auth-buttons a:hover {
+    background-color: #f9d71c;
+    color: #1e1e2f;
+    box-shadow: 0 6px 12px rgb(249 215 28 / 0.6);
+    text-decoration: none;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+    .menu.expanded {
+        width: 180px;
+    }
+    .contenido.mover-contenido {
+        margin-left: 180px;
+    }
+    #boton_menu {
+        font-size: 22px;
+        padding: 16px 16px;
+    }
+    
+    main {
+        padding: 20px;
+        margin: 1em 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .auth-buttons {
+        flex-direction: column;
+        gap: 12px;
+    }
+    .auth-buttons a {
+        width: 100%;
+        padding: 14px 0;
+    }
 }
