@@ -1,29 +1,43 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login EstNote</title>
+    <title>EstNote - Iniciar Sesión</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/autenticacion.css') }}">
 </head>
+
 <body>
     <div class="contenedor">
         <div class="logo">
-            <img src="estnotelogo.png" alt="Logo">
+            <img src="{{url_for('static', filename='img/estnotelogo.svg')}}" alt="Logo">
             <h2>EstNote</h2>
         </div>
 
         <form action="/login" method="post" class="formulario">
 
             <label for="correo">Correo:</label>
-            <input type="email" name="correo" required><br>
+            <input type="email" name="correo" required>
 
             <label for="contraseña">Contraseña:</label>
-            <input type="password" name="contraseña" required><br>
+            <input type="password" name="contraseña" required>
+
+            <div style="color: red;">
+                {% if mensaje %}
+                {{ mensaje }}
+                {% endif %}
+            </div>
 
             <div class="boton">
                 <button type="submit">Iniciar Sesión</button>
             </div>
         </form>
+        <p class="registro-link">
+            ¿No tienes una cuenta? <a href="{{ url_for('registro') }}">Regístrate aquí</a>
+        </p>
+
     </div>
 </body>
+
 </html>

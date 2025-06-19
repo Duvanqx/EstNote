@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EstNote - Inicio</title>
+    <title>EstNote - Periodos</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css')}}">
 </head>
 
@@ -46,27 +46,37 @@
         </header>
 
         <main>
-            {% if usuario %}
-            <h2>Hola, {{ usuario }}. ¡Bienvenida a EstNote, la forma más fácil y rápida de visualizar tus
-                calificaciones!</h2>
-            <a href="/logout">Cerrar Sesión</a>
-            {% else %}
-            <div class="auth-buttons">
-                <h2>¿Quieres tener una forma fácil y rápida de visualizar tus calificaciones?</h2>
-                <a href="{{ url_for('registro') }}">Registrarse</a><br>
-                <a href="{{ url_for('login') }}">Iniciar Sesión</a>
-            </div>
-            {% endif %}
+            <h2>Formulario para agregar periodos o semestres</h2>
+            <form action="/agregar_periodo" method="post" class="formulario">
 
-            <div class="Dividir"></div>
+                <div style="color: rgb(13, 255, 0);">
+                    {% if mensaje %}
+                    {{ mensaje }}
+                    {% endif %}
+                </div>
 
-            <p>¿Qué puedes hacer?</Sp>
-            <ul>
-                <li>Agregar y organizar materias</li>
-                <li>Crear y editar tus calificaciones</li>
-                <li>Ver tus calificaciones finales</li>
-                <li>Ser mas ordenado</li>
-            </ul>
+                <label for="nombre">Nombre:</label>
+                <input type="text" name="nombre">
+
+                <label for="inicio">Fecha inicio:</label>
+                <input type="date" name="inicio">
+
+                <label for="fin">Fecha fin:</label>
+                <input type="date" name="fin">
+
+                <label for="tipo">Tipo:</label>
+                <select name="tipo" id="tipo">
+                    <option value="periodo">Periodo</option>
+                    <option value="semestre">Semestre</option>
+                </select>
+
+                <label for="porcentaje">Porcentaje:</label>
+                <input type="range" id="porcentajePeriodo" name="porcentajePeriodo" min="0" step="1" value="25"
+                    oninput="outputPorcentaje.value = porcentajePeriodo.value + '%'">
+                <output id="outputPorcentaje">25%</output>
+
+                <button type="submit">Agregar Periodo</button>
+            </form>
         </main>
 
         <script src="{{url_for('static', filename='scripts/script.js')}}"></script>

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EstNote - Inicio</title>
+    <title>EstNote - Periodos</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css')}}">
 </head>
 
@@ -46,27 +46,25 @@
         </header>
 
         <main>
-            {% if usuario %}
-            <h2>Hola, {{ usuario }}. ¡Bienvenida a EstNote, la forma más fácil y rápida de visualizar tus
-                calificaciones!</h2>
-            <a href="/logout">Cerrar Sesión</a>
-            {% else %}
-            <div class="auth-buttons">
-                <h2>¿Quieres tener una forma fácil y rápida de visualizar tus calificaciones?</h2>
-                <a href="{{ url_for('registro') }}">Registrarse</a><br>
-                <a href="{{ url_for('login') }}">Iniciar Sesión</a>
+            <button class="agregar"><a href="{{ url_for('agregarPeriodo') }}">Agregar Periodo</a></button>
+
+            <div class="materias-contenedor">
+                {% for p in periodos %}
+                <div class="materia">
+                        <div class="info">
+                            <h3>{{ p[2] }}</h3>
+                            <p><strong>Fecha inicio:</strong> {{ p[3] }} </p>
+                            <p><strong>Fecha fin:</strong> {{ p[4] }} </p>
+                            <p><strong>Resultados final:</strong></p>
+                        </div>
+
+                        <div class="acciones">
+                            <a href="{{ url_for('editarPeriodo', id_periodo= p[0]) }}">Editar</a>
+                            <a href="{{ url_for('eliminarPeriodo', id_periodo= p[0]) }}">Eliminar</a>
+                        </div>
+                </div>
+                {% endfor %}
             </div>
-            {% endif %}
-
-            <div class="Dividir"></div>
-
-            <p>¿Qué puedes hacer?</Sp>
-            <ul>
-                <li>Agregar y organizar materias</li>
-                <li>Crear y editar tus calificaciones</li>
-                <li>Ver tus calificaciones finales</li>
-                <li>Ser mas ordenado</li>
-            </ul>
         </main>
 
         <script src="{{url_for('static', filename='scripts/script.js')}}"></script>

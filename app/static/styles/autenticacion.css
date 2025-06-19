@@ -1,0 +1,148 @@
+/* ===== Reset ===== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f9f9f9, #e4e4e4);
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+/* ===== Contenedor principal ===== */
+.contenedor {
+    background-color: #ffffff;
+    padding: 50px 40px;
+    border-radius: 20px;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 480px;
+    transition: all 0.3s ease;
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+/* ===== Animación de entrada ===== */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== Logo y título ===== */
+.logo {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.logo img {
+    height: 70px;
+    margin-bottom: 10px;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+}
+
+.logo h2 {
+    font-size: 2rem;
+    color: #1e1e2f;
+    letter-spacing: 1px;
+}
+
+/* ===== Formulario general ===== */
+.formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.formulario label {
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 4px;
+    color: #444;
+}
+
+.formulario input,
+.formulario select {
+    padding: 12px 15px;
+    border-radius: 8px;
+    border: 1.5px solid #ccc;
+    background-color: #fdfdfd;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.formulario input:focus,
+.formulario select:focus {
+    border-color: #1e1e2f;
+    box-shadow: 0 0 0 3px rgba(30, 30, 47, 0.15);
+    outline: none;
+}
+
+/* ===== Botón de acción principal ===== */
+.boton {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.boton button {
+    width: 100%;
+    padding: 14px;
+    background-color: #1e1e2f;
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.boton button:hover {
+    background-color: #f9d71c;
+    color: #1e1e2f;
+    box-shadow: 0 8px 18px rgba(249, 215, 28, 0.4);
+}
+
+/* ===== Enlace de registro ===== */
+.registro-link {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 0.95rem;
+    color: #555;
+}
+
+.registro-link a {
+    color: #1e1e2f;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.registro-link a:hover {
+    color: #f9d71c;
+    text-decoration: underline;
+}
+
+
+/* ===== Responsive Design ===== */
+@media (max-width: 480px) {
+    .contenedor {
+        padding: 30px 20px;
+        border-radius: 0;
+        box-shadow: none;
+        min-height: 100vh;
+    }
+
+    .logo img {
+        height: 50px;
+    }
+
+    .logo h2 {
+        font-size: 1.5rem;
+    }
+}

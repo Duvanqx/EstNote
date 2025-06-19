@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EstNote - Inicio</title>
+    <title>EstNote - Editar Periodo</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css')}}">
 </head>
 
@@ -46,27 +46,30 @@
         </header>
 
         <main>
-            {% if usuario %}
-            <h2>Hola, {{ usuario }}. ¡Bienvenida a EstNote, la forma más fácil y rápida de visualizar tus
-                calificaciones!</h2>
-            <a href="/logout">Cerrar Sesión</a>
-            {% else %}
-            <div class="auth-buttons">
-                <h2>¿Quieres tener una forma fácil y rápida de visualizar tus calificaciones?</h2>
-                <a href="{{ url_for('registro') }}">Registrarse</a><br>
-                <a href="{{ url_for('login') }}">Iniciar Sesión</a>
-            </div>
-            {% endif %}
+            <h2>Formulario para editar periodo o semestre</h2>
+            <form action="{{ url_for('editarPeriodo', id_periodo=periodo[0]) }}" method="post" class="formulario">
+                <label for="nombre">Nombre:</label>
+                <input type="text" name="nombre" value="{{ periodo[2] }}">
 
-            <div class="Dividir"></div>
+                <label for="inicio">Fecha inicio:</label>
+                <input type="date" name="inicio" value="{{ periodo[3] }}">
 
-            <p>¿Qué puedes hacer?</Sp>
-            <ul>
-                <li>Agregar y organizar materias</li>
-                <li>Crear y editar tus calificaciones</li>
-                <li>Ver tus calificaciones finales</li>
-                <li>Ser mas ordenado</li>
-            </ul>
+                <label for="fin">Fecha fin:</label>
+                <input type="date" name="fin" value="{{ periodo[4] }}">
+
+                <label for="tipo">Tipo:</label>
+                <select name="tipo" id="tipo">
+                    <option value="periodo" {% if periodo[5]=='periodo' %}selected{% endif %}>Periodo</option>
+                    <option value="semestre" {% if periodo[5]=='semestre' %}selected{% endif %}>Semestre</option>
+                </select>
+
+                <label for="porcentaje">Porcentaje:</label>
+                <input type="range" id="porcentajePeriodo" name="porcentajePeriodo" min="0" step="1"
+                    value="{{ periodo[5] }}" oninput="outputPorcentaje.value = porcentajePeriodo.value + '%'">
+                <output id="outputPorcentaje">{{ periodo[6] }}%</output>
+
+                <button type="submit">Editar Periodo</button>
+            </form>
         </main>
 
         <script src="{{url_for('static', filename='scripts/script.js')}}"></script>

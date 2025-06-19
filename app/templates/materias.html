@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EstNote - Inicio</title>
+    <title>EstNote - Materias</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css')}}">
 </head>
 
@@ -46,27 +46,37 @@
         </header>
 
         <main>
-            {% if usuario %}
-            <h2>Hola, {{ usuario }}. ¡Bienvenida a EstNote, la forma más fácil y rápida de visualizar tus
-                calificaciones!</h2>
-            <a href="/logout">Cerrar Sesión</a>
-            {% else %}
-            <div class="auth-buttons">
-                <h2>¿Quieres tener una forma fácil y rápida de visualizar tus calificaciones?</h2>
-                <a href="{{ url_for('registro') }}">Registrarse</a><br>
-                <a href="{{ url_for('login') }}">Iniciar Sesión</a>
+
+            <form class="filtro-periodos" action="{{ url_for('verPeriodo') }}" method="get">
+                <select name="periodo_id">
+                    <option value="">Todos los periodos</option>
+                    {% for periodo in periodos %}
+                    <option value="{{ periodo[0] }}">{{ periodo[2] }}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit">Filtrar</button>
+            </form>
+
+            <button class="agregar"><a href="{{ url_for('agregarMaterias') }}">Agregar Materia</a></button>
+            <div class="materias-contenedor">
+                {% for m in materias %}
+                <div class="materia">
+                    <a href="#">
+                        <div class="info">
+                            <h3>{{ m[3] }}</h3>
+                            <p><strong>Área:</strong> {{ m[4] }} </p>
+                            <p><strong>Porcentaje en el periodo:</strong> {{ m[5] }} </p>
+                            <p><strong>Profesor:</strong> {{ m[6] }} </p>
+                            <p><strong>Resultados final:</strong></p>
+                        </div>
+                        <div class="acciones">
+                            <a href="{{ url_for('editarMateria', id_materia= m[0]) }}">Editar</a>
+                            <a href="{{ url_for('eliminarMateria', id_materia= m[0]) }}">Eliminar</a>
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
             </div>
-            {% endif %}
-
-            <div class="Dividir"></div>
-
-            <p>¿Qué puedes hacer?</Sp>
-            <ul>
-                <li>Agregar y organizar materias</li>
-                <li>Crear y editar tus calificaciones</li>
-                <li>Ver tus calificaciones finales</li>
-                <li>Ser mas ordenado</li>
-            </ul>
         </main>
 
         <script src="{{url_for('static', filename='scripts/script.js')}}"></script>

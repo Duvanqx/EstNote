@@ -1,50 +1,57 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="wnameth=device-wnameth, initial-scale=1.0">
-    <title>Registro de usuario EstNote</title>
+    <title>EstNote Registro de Usuarios</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/autenticacion.css') }}">
 </head>
+
 <body>
     <div class="contenedor">
         <div class="logo">
-            <img src="estnotelogo.png" alt="logo">
+            <img src="{{url_for('static', filename='img/estnotelogo.svg')}}" alt="logo">
             <h2>EstNote</h2>
         </div>
 
         <form action="/registro" method="post" class="formulario">
 
             <label for="nombres">Nombres:</label>
-            <input type="text" name="nombres"><br>
+            <input type="text" name="nombres">
 
             <label for="apellidos">Apellidos:</label>
-            <input type="text" name="apellidos"><br>
+            <input type="text" name="apellidos">
 
             <label for="institucion">Institución:</label>
-            <input type="text" name="institucion"><br>
+            <input type="text" name="institucion">
 
             <label for="grado">Grado:</label>
-            <select name="grado" name="grado">
+            <select name="grado">
                 <option value="primaria">Primaria</option>
                 <option value="secundaria">Secundaria</option>
                 <option value="universidad">Universidad</option>
                 <option value="postgrado">Postgrado</option>
-            </select><br>
+            </select>
 
             <label for="telefono">Télefono:</label>
-            <input type="tel" name="telefono"><br>
+            <input type="tel" name="telefono">
 
             <label for="correo">Correo:</label>
-            <input type="email" name="correo" required><br>
+            <input type="email" name="correo" required>
 
             <label for="contraseña">Contraseña:</label>
-            <input type="password" name="contraseña" required><br>
+            <input type="password" name="contraseña" required>
 
             <div class="boton">
                 <button type="submit">Registrarse</button>
-            </div> 
+            </div>
         </form>
-        </div>
+        <p class="registro-link">
+            ¿Ya tienes una cuenta? <a href="{{ url_for('login') }}">Inicia sesión aquí</a>
+        </p>
+    </div>
     </div>
 </body>
+
 </html>

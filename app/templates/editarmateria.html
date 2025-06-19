@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EstNote - Editar Materia</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='styles/style.css')}}">
+</head>
+
+<body>
+    <div class="contenido">
+
+        <div id="menu" class="menu collapsed">
+            <button id="boton_menu">☰</button>
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('index')}}"><span><img
+                                    src="{{ url_for('static', filename='img/inicio.svg') }}" alt="Inicio"></span><span
+                                class="text">Inicio</span></a></li>
+                    <li><a href="{{ url_for('periodo')}}"><span><img
+                                    src="{{ url_for('static', filename='img/periodos.svg') }}"
+                                    alt="Periodos"></span><span class="text">Periodos</span></a></li>
+                    <li><a href="{{ url_for('materias' )}}"><span><img
+                                    src="{{ url_for('static', filename='img/materias.svg') }}"
+                                    alt="Materias"></span><span class="text">Materias</span></a></li>
+                    <li><a href="#"><span><img src="{{ url_for('static', filename='img/calificaciones.svg') }}"
+                                    alt="Calificaciones"></span><span class="text">Calificaciones</span></a></li>
+                    <li><a href="#"><span><img src="{{ url_for('static', filename='img/info.svg')}}"
+                                    alt="Acerca de"></span><span class="text">Acerca de</span></a></li>
+                    <li><a href="#"><span><img src="{{ url_for('static', filename='img/ayuda.svg') }}"
+                                    alt="Ayuda"></span><span class="text">Ayuda</span></a></li>
+                </ul>
+            </nav>
+        </div>
+
+
+        <header>
+            <div class="logo">
+                <img src="{{url_for('static', filename='img/estnotelogo.svg')}}" alt="Logo">
+            </div>
+            <h1>EstNote</h1>
+            <div class="usuario">
+                <a href=""><img src="{{url_for('static', filename='img/usuario.svg')}}" alt=""></a>
+            </div>
+        </header>
+
+        <main>
+            <h2>Formulario para editar materia</h2>
+            <form action="{{ url_for('editarMateria', id_materia=materia[0]) }}" method="post" class="formulario">
+
+                <label for="nombre">Nombre de la materia:</label>
+                <input type="text" name="nombre" value="{{ materia[3] }}">
+
+                <label for="area">Área:</label>
+                <select name="area" id="area">
+                    <option value="ciencias naturales" {% if materia[4]=="ciencias naturales" %}selected{% endif %}>
+                        Ciencias naturales</option>
+                    <option value="matematicas" {% if materia[4]=="matematicas" %}selected{% endif %}>Matemáticas
+                    </option>
+                    <option value="ciencias sociales" {% if materia[4]=="ciencias sociales" %}selected{% endif %}>
+                        Ciencias sociales</option>
+                    <option value="lengua y literatura" {% if materia[4]=="lengua y literatura" %}selected{% endif %}>
+                        Lengua y literatura</option>
+                    <option value="idiomas extranjeros" {% if materia[4]=="idiomas extranjeros" %}selected{% endif %}>
+                        Idiomas extranjeros</option>
+                    <option value="educacion artistica" {% if materia[4]=="educacion artistica" %}selected{% endif %}>
+                        Educación artística</option>
+                    <option value="educacion fisica y deportes" {% if materia[4]=="educacion fisica y deportes"
+                        %}selected{% endif %}>Educación física y deportes</option>
+                    <option value="tecnologia e informatica" {% if materia[4]=="tecnologia e informatica" %}selected{%
+                        endif %}>Tecnología e informática</option>
+                    <option value="formacion civica y etica" {% if materia[4]=="formacion civica y etica" %}selected{%
+                        endif %}>Formación cívica y ética</option>
+                </select>
+
+                <label for="porcentajeMateria">Porcentaje de la materia en el período:</label><br>
+                <input type="range" id="porcentajeMateria" name="porcentajeMateria" min="0" max="100" step="1"
+                    value="25" oninput="outputPorcentaje.value = porcentajeMateria.value + '%'">
+                <output id="outputPorcentaje">{{ materia[5] }}</output>
+
+
+
+                <label for="profesor">Nombre del profesor:</label>
+                <input type="text" name="profesor" value="{{ materia[6] }}">
+
+
+                <button type="submit">Editar Materia</button>
+            </form>
+        </main>
+
+        <script src="{{url_for('static', filename='scripts/script.js')}}"></script>
+
+    </div>
+</body>
+
+</html>
