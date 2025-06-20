@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -60,15 +60,15 @@
 
                 <label for="area">Area:</label>
                 <select name="area" id="area">
-                    <option value="ciencias naturales">Ciencias naturales</option>
-                    <option value="matematicas">Matematicas</option>
-                    <option value="ciencias sociales">Ciencias sociales</option>
-                    <option value="lengua y literatura">Lengua y literatura</option>
-                    <option value="idiomas extranjeros">Idiomas extranjeros</option>
-                    <option value="educacion artistica">Educacion artistica</option>
-                    <option value="educacion fisica y deportes">Educacion fisica y deportes</option>
-                    <option value="tecnologia e informatica">Tecnologia e informatica</option>
-                    <option value="formacion civica y etica">Formacion civica y etica</option>
+                    <option value="Ciencias naturales">Ciencias naturales</option>
+                    <option value="Matematicas">Matematicas</option>
+                    <option value="Ciencias sociales">Ciencias sociales</option>
+                    <option value="Lengua y literatura">Lengua y literatura</option>
+                    <option value="Idiomas extranjeros">Idiomas extranjeros</option>
+                    <option value="Educacion artistica">Educacion artistica</option>
+                    <option value="Educacion fisica y deportes">Educacion fisica y deportes</option>
+                    <option value="Tecnologia e informatica">Tecnologia e informatica</option>
+                    <option value="Formacion civica y etica">Formacion civica y etica</option>
                 </select>
 
                 <label for="porcentajeMateria">Porcentaje de la materia en el período:</label><br>
@@ -76,10 +76,13 @@
                     value="25" oninput="outputPorcentaje.value = porcentajeMateria.value + '%'">
                 <output id="outputPorcentaje">25%</output>
 
-
-
                 <label for="profesor">Nombre del profesor:</label>
-                <input type="text" name="profesor">
+                <select name="profesor" id="profesor">
+                    <option value="">Escoge un profesor</option>
+                    {% for profesor in profesores %}
+                    <option value="{{ profesor[0] }}">{{ profesor[1] }}</option>
+                    {% endfor %}
+                </select>
 
                 <label for="periodo"><strong>Periodo:</strong></label>
                 <select name="periodo" id="periodo" required>

@@ -32,8 +32,15 @@ def registro():
         contraseña_hash = generate_password_hash(contraseña)
 
         cursor= mysql.connection.cursor()
-        cursor.execute("INSERT INTO usuarios(nombres, apellidos, institucion, grado, telefono, correo, contraseña ) VALUES (%s,%s,%s,%s,%s,%s,%s)",
-                       (nombres,apellidos,institucion,grado,telefono,correo,contraseña_hash ))
+
+        cursor.execute("INSERT INTO instituciones(nombre) VALUES (%s)",(institucion,))
+        institucion = cursor.lastrowid
+        cursor.execute("INSERT INTO grados(nombre) VALUES (%s)",(grado,))
+        grado = cursor.lastrowid
+
+
+        cursor.execute("INSERT INTO usuarios(id_institucion , id_grado , nombres, apellidos, telefono,  correo, contraseña ) VALUES (%s,%s,%s,%s,%s,%s,%s)",
+                       (institucion, grado, nombres,apellidos,telefono,correo,contraseña_hash ))
         mysql.connection.commit()
         cursor.close()
 
@@ -57,7 +64,7 @@ def login():
         if usuario and check_password_hash(usuario[7], contraseña):
 
             session['usuario_id'] = usuario[0]
-            session['usuario'] = usuario[1]
+            session['usuario'] = usuario[3]
             
             return redirect(url_for('index'))
         else:
@@ -100,6 +107,7 @@ def eliminarPeriodo(id_periodo):
     cursor = mysql.connection.cursor()
     cursor.execute("DELETE FROM periodos WHERE id_periodo = %s",(id_periodo,))
     mysql.connection.commit()
+    cursor.close()
     return redirect(url_for('periodo'))
 
 @app.route('/editar_periodo/<int:id_periodo>', methods=['GET','POST'])
@@ -118,30 +126,46 @@ def editarPeriodo(id_periodo):
     
     cursor.execute("SELECT * FROM periodos WHERE id_periodo=%s",(id_periodo,))
     periodos = cursor.fetchone()
+    cursor.close()
     return render_template('editarperiodo.html', periodo=periodos)
-
 
 @app.route('/ver_periodo')
 def verPeriodo():
+    if 'usuario_id' not in session:
+        return redirect(url_for('login'))
+
     periodo_id = request.args.get('periodo_id')
     usuario_id = session['usuario_id']
-    
+
     cursor = mysql.connection.cursor()
 
     cursor.execute("SELECT * FROM periodos")
     periodos = cursor.fetchall()
 
+
     if periodo_id:
-        cursor.execute("SELECT * FROM materias WHERE id_usuario = %s AND id_periodo = %s", (usuario_id, periodo_id))
+        cursor.execute("SELECT m.id_materia, m.nombre AS nombre_materia, m.porcentaje_periodo, a.nombre AS nombre_area, GROUP_CONCAT(p.nombre SEPARATOR ', ') AS profesores FROM materias m JOIN areas_materia a ON m.id_area = a.id_area LEFT JOIN materia_profesor mp ON m.id_materia = mp.id_materia LEFT JOIN profesores p ON mp.id_profesor = p.id_profesor WHERE m.id_usuario = %s AND m.id_periodo = %s GROUP BY m.id_materia", (usuario_id, periodo_id))
     else:
-        cursor.execute("SELECT * FROM materias WHERE id_usuario = %s", (usuario_id,))
-
-
+        cursor.execute("SELECT m.id_materia, m.nombre AS nombre_materia, m.porcentaje_periodo, a.nombre AS nombre_area, GROUP_CONCAT(p.nombre SEPARATOR ', ') AS profesores FROM materias m JOIN areas_materia a ON m.id_area = a.id_area LEFT JOIN materia_profesor mp ON m.id_materia = mp.id_materia LEFT JOIN profesores p ON mp.id_profesor = p.id_profesor WHERE m.id_usuario = %s GROUP BY m.id_materia", (usuario_id,))
+    
     materias = cursor.fetchall()
     cursor.close()
 
-    return render_template('materias.html', materias=materias, periodos=periodos)
+    return render_template('materias.html', materias=materias, periodos=periodos, periodo_seleccionado=periodo_id)
 
+@app.route('/profesor', methods=['GET','POST'])
+def agregarProfesor():
+    if request.method == 'POST':
+        nombre = request.form['nombre']
+        correo = request.form['correo']
+        telefono = request.form['telefono']
+
+        cursor = mysql.connection.cursor()
+        cursor.execute("INSERT INTO profesores(nombre, correo, telefono) VALUES (%s,%s,%s)", (nombre,correo,telefono))
+        mysql.connection.commit()
+        cursor.close()
+        return redirect(url_for('materias'))
+    return render_template("agregarprofesor.html")
 
 @app.route('/materias')
 def materias():
@@ -150,7 +174,7 @@ def materias():
         return redirect(url_for('login'))
 
     cursor = mysql.connection.cursor()
-    cursor.execute("SELECT * FROM materias WHERE id_usuario = %s",(session['usuario_id'],))
+    cursor.execute("SELECT m.id_materia, m.nombre AS nombre_materia, m.porcentaje_periodo, a.nombre AS nombre_area, GROUP_CONCAT(p.nombre SEPARATOR ', ') AS profesores FROM materias m JOIN areas_materia a ON m.id_area = a.id_area LEFT JOIN materia_profesor mp ON m.id_materia = mp.id_materia LEFT JOIN profesores p ON mp.id_profesor = p.id_profesor WHERE m.id_usuario = %s GROUP BY m.id_materia", (session['usuario_id'],))
     materias = cursor.fetchall()
     cursor.close()
     return render_template('materias.html',materias=materias)
@@ -166,6 +190,9 @@ def agregarMaterias():
     cursor.execute("SELECT * FROM periodos WHERE id_usuario = %s", (session["usuario_id"],))
     periodos = cursor.fetchall()
 
+    cursor.execute("SELECT * FROM profesores")
+    profesores = cursor.fetchall()
+
     if request.method == 'POST':
         usuario = session['usuario_id']
         periodo = request.form['periodo']
@@ -174,18 +201,33 @@ def agregarMaterias():
         porcentajeMateria = request.form['porcentajeMateria']
         profesor = request.form['profesor']
 
-        cursor.execute("INSERT INTO materias ( id_usuario, id_periodo , nombre , area, porcentaje_periodo, profesor) VALUES ( %s, %s, %s, %s, %s, %s)", 
-                       ( usuario, periodo, nombre, area, porcentajeMateria, profesor))
+        cursor.execute("SELECT id_area FROM areas_materia WHERE nombre = %s", (area,))
+        resultado = cursor.fetchone()
+
+        if resultado:
+            id_area = resultado[0]
+        else:
+            cursor.execute("INSERT INTO areas_materia (nombre) VALUES (%s)", (area,))
+            id_area = cursor.lastrowid
+
+        cursor.execute("INSERT INTO materias ( id_usuario, id_periodo , nombre , id_area, porcentaje_periodo) VALUES ( %s, %s, %s, %s, %s)", 
+                       ( usuario, periodo, nombre, id_area,  porcentajeMateria))
+        id_materia = cursor.lastrowid
+        
+        cursor.execute("INSERT INTO materia_profesor(id_materia, id_profesor) VALUES (%s,%s)", (id_materia,profesor))
         mysql.connection.commit()
         cursor.close()
         mensaje = 'Materia agregada con exito.'
-    return render_template('agregarmaterias.html', periodos=periodos, mensaje=mensaje)
+
+        
+    return render_template('agregarmaterias.html', periodos=periodos, mensaje=mensaje, profesores=profesores)
 
 @app.route('/eliminar_materia/<int:id_materia>')
 def eliminarMateria(id_materia):
     cursor = mysql.connection.cursor()
     cursor.execute("DELETE FROM materias WHERE id_materia = %s",(id_materia,))
     mysql.connection.commit()
+    cursor.close()
     return redirect(url_for('materias'))
 
 @app.route('/editar_materia/<int:id_materia>', methods=['GET', 'POST'])
@@ -197,13 +239,29 @@ def editarMateria(id_materia):
         porcentajeMateria = request.form['porcentajeMateria']
         profesor = request.form['profesor']
 
-        cursor.execute("UPDATE materias SET nombre = %s, area = %s, porcentaje_periodo = %s, profesor = %s WHERE id_materia = %s", (nombre, area, porcentajeMateria, profesor, id_materia))
+        cursor.execute("SELECT id_area FROM areas_materia WHERE nombre = %s", (area,))
+        resultado = cursor.fetchall()
+
+        if resultado:
+            id_area = resultado[0]
+        else:
+            cursor.execute("INSERT INTO areas_materia(nombre) VALUES (%s)", (area,))
+            id_area = cursor.lastrowid
+
+        cursor.execute("UPDATE materias SET nombre = %s, id_area = %s, porcentaje_periodo = %s WHERE id_materia = %s", (nombre, id_area, porcentajeMateria, id_materia))
         mysql.connection.commit()
+
+        cursor.execute("UPDATE materia_profesor SET id_profesor = %s",(profesor,))
         return redirect(url_for('materias'))
     
-    cursor.execute("SELECT * FROM materias WHERE id_materia = %s", (id_materia,))
-    materias = cursor.fetchone()
-    return render_template('editarmateria.html', materia=materias)
+    cursor.execute("SELECT m.id_materia, m.nombre AS nombre_materia, m.porcentaje_periodo, a.nombre AS nombre_area, GROUP_CONCAT(p.nombre SEPARATOR ', ') AS profesores FROM materias m JOIN areas_materia a ON m.id_area = a.id_area LEFT JOIN materia_profesor mp ON m.id_materia = mp.id_materia LEFT JOIN profesores p ON mp.id_profesor = p.id_profesor WHERE m.id_materia = %s AND m.id_usuario = %s GROUP BY m.id_materia", (id_materia, session['usuario_id']))
+    materia = cursor.fetchone()
+
+    cursor.execute("SELECT * FROM profesores")
+    profesor = cursor.fetchall()
+    mysql.connection.commit()
+    cursor.close()
+    return render_template('editarmateria.html', materia=materia, profesor=profesor)
 
 
 

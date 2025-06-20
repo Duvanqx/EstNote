@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -50,40 +50,42 @@
             <form action="{{ url_for('editarMateria', id_materia=materia[0]) }}" method="post" class="formulario">
 
                 <label for="nombre">Nombre de la materia:</label>
-                <input type="text" name="nombre" value="{{ materia[3] }}">
+                <input type="text" name="nombre" value="{{ materia[1] }}">
 
                 <label for="area">Área:</label>
                 <select name="area" id="area">
-                    <option value="ciencias naturales" {% if materia[4]=="ciencias naturales" %}selected{% endif %}>
-                        Ciencias naturales</option>
-                    <option value="matematicas" {% if materia[4]=="matematicas" %}selected{% endif %}>Matemáticas
+                    <option value="Ciencias naturales" {% if materia[3]|lower=="ciencias naturales" %}selected{% endif
+                        %}>Ciencias naturales</option>
+                    <option value="Matematicas" {% if materia[3]|lower=="matematicas" %}selected{% endif %}>Matemáticas
                     </option>
-                    <option value="ciencias sociales" {% if materia[4]=="ciencias sociales" %}selected{% endif %}>
+                    <option value="Ciencias sociales" {% if materia[3]|lower=="ciencias sociales" %}selected{% endif %}>
                         Ciencias sociales</option>
-                    <option value="lengua y literatura" {% if materia[4]=="lengua y literatura" %}selected{% endif %}>
-                        Lengua y literatura</option>
-                    <option value="idiomas extranjeros" {% if materia[4]=="idiomas extranjeros" %}selected{% endif %}>
-                        Idiomas extranjeros</option>
-                    <option value="educacion artistica" {% if materia[4]=="educacion artistica" %}selected{% endif %}>
-                        Educación artística</option>
-                    <option value="educacion fisica y deportes" {% if materia[4]=="educacion fisica y deportes"
+                    <option value="Lengua y literatura" {% if materia[3]|lower=="lengua y literatura" %}selected{% endif
+                        %}>Lengua y literatura</option>
+                    <option value="Idiomas extranjeros" {% if materia[3]|lower=="idiomas extranjeros" %}selected{% endif
+                        %}>Idiomas extranjeros</option>
+                    <option value="Educacion artistica" {% if materia[3]|lower=="educacion artistica" %}selected{% endif
+                        %}>Educación artística</option>
+                    <option value="Educacion fisica y deportes" {% if materia[3]|lower=="educacion fisica y deportes"
                         %}selected{% endif %}>Educación física y deportes</option>
-                    <option value="tecnologia e informatica" {% if materia[4]=="tecnologia e informatica" %}selected{%
-                        endif %}>Tecnología e informática</option>
-                    <option value="formacion civica y etica" {% if materia[4]=="formacion civica y etica" %}selected{%
-                        endif %}>Formación cívica y ética</option>
+                    <option value="Tecnologia e informatica" {% if materia[3]|lower=="tecnologia e informatica"
+                        %}selected{% endif %}>Tecnología e informática</option>
+                    <option value="Formacion civica y etica" {% if materia[3]|lower=="formacion civica y etica"
+                        %}selected{% endif %}>Formación cívica y ética</option>
                 </select>
 
                 <label for="porcentajeMateria">Porcentaje de la materia en el período:</label><br>
                 <input type="range" id="porcentajeMateria" name="porcentajeMateria" min="0" max="100" step="1"
                     value="25" oninput="outputPorcentaje.value = porcentajeMateria.value + '%'">
-                <output id="outputPorcentaje">{{ materia[5] }}</output>
-
-
+                <output id="outputPorcentaje">{{ materia[2] }}</output>
 
                 <label for="profesor">Nombre del profesor:</label>
-                <input type="text" name="profesor" value="{{ materia[6] }}">
-
+                <select name="profesor" id="profesor">
+                    <option value="">Escoge un profesor</option>
+                    {% for profesor in profesor %}
+                    <option value="{{ profesor[0] }}">{{ profesor[1] }}</option>
+                    {% endfor %}
+                </select>
 
                 <button type="submit">Editar Materia</button>
             </form>

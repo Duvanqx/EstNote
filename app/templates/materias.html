@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -57,21 +57,22 @@
                 <button type="submit">Filtrar</button>
             </form>
 
+            <button class="agregar"><a href="{{ url_for('agregarProfesor')  }}">Agregar Profesor</a></button>
             <button class="agregar"><a href="{{ url_for('agregarMaterias') }}">Agregar Materia</a></button>
             <div class="materias-contenedor">
                 {% for m in materias %}
                 <div class="materia">
                     <a href="#">
                         <div class="info">
-                            <h3>{{ m[3] }}</h3>
-                            <p><strong>Área:</strong> {{ m[4] }} </p>
-                            <p><strong>Porcentaje en el periodo:</strong> {{ m[5] }} </p>
-                            <p><strong>Profesor:</strong> {{ m[6] }} </p>
+                            <h3>{{ m[1] }}</h3>
+                            <p><strong>Área:</strong> {{ m[3] }}</p>
+                            <p><strong>Porcentaje en el periodo:</strong> {{ m[2] }}%</p>
+                            <p><strong>Profesor(es):</strong> {{ m[4] }}</p>
                             <p><strong>Resultados final:</strong></p>
                         </div>
                         <div class="acciones">
-                            <a href="{{ url_for('editarMateria', id_materia= m[0]) }}">Editar</a>
-                            <a href="{{ url_for('eliminarMateria', id_materia= m[0]) }}">Eliminar</a>
+                            <a href="{{ url_for('editarMateria', id_materia=m[0]) }}">Editar</a>
+                            <a href="{{ url_for('eliminarMateria', id_materia=m[0]) }}">Eliminar</a>
                         </div>
                     </a>
                 </div>

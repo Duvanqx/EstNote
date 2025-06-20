@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EstNote - Inicio</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css')}}">
+    <title>EstNote - Agregar Profesor</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='styles/style.css')}}">
 </head>
 
 <body>
@@ -46,27 +46,20 @@
         </header>
 
         <main>
-            {% if usuario %}
-            <h2>Hola, {{ usuario }}. ¡Bienvenida a EstNote, la forma más fácil y rápida de visualizar tus
-                calificaciones!</h2>
-            <a href="/logout">Cerrar Sesión</a>
-            {% else %}
-            <div class="auth-buttons">
-                <h2>¿Quieres tener una forma fácil y rápida de visualizar tus calificaciones?</h2>
-                <a href="{{ url_for('registro') }}">Registrarse</a><br>
-                <a href="{{ url_for('login') }}">Iniciar Sesión</a>
-            </div>
-            {% endif %}
+            <h2>Formulario para Agregar Profesor</h2>
 
-            <div class="Dividir"></div>
+            <form action="/profesor" method="post" class="formulario">
+                <label for="nombre">Nombre completo:</label>
+                <input type="text" name="nombre">
 
-            <p>¿Qué puedes hacer?</Sp>
-            <ul>
-                <li>Agregar y organizar materias</li>
-                <li>Crear y editar tus calificaciones</li>
-                <li>Ver tus calificaciones finales</li>
-                <li>Ser mas ordenado</li>
-            </ul>
+                <label for="correo">Correo:</label>
+                <input type="email" name="correo">
+
+                <label for="telefono">Telefono:</label>
+                <input type="tel" name="telefono">
+
+                <button type="submit">Agregar Profesor</button>
+            </form>
         </main>
 
         <script src="{{url_for('static', filename='scripts/script.js')}}"></script>
