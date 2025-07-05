@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EstNote - Agregar Calificación</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='styles/style.css')}}">
+</head>
+
+<body>
+    <div class="contenido">
+
+        <div id="menu" class="menu collapsed">
+            <button id="boton_menu">☰</button>
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('index')}}"><span><img
+                                    src="{{ url_for('static', filename='img/inicio.svg') }}" alt="Inicio"></span><span
+                                class="text">Inicio</span></a></li>
+                    <li><a href="{{ url_for('periodo') }}">
+                            <span><img src="{{ url_for('static', filename='img/materias.svg') }}" alt="Materias"></span>
+                            <span class="text">Gestor Academico</span>
+                        </a></li>
+                    <li><a href="{{ url_for('configuracion') }}"><span><img
+                                    src="{{ url_for('static', filename='img/calificaciones.svg') }}"
+                                    alt="Calificaciones"></span><span class="text">Configuración de
+                                Asignatura</span></a></li>
+                    <li><a href="#"><span><img src="{{ url_for('static', filename='img/info.svg')}}"
+                                    alt="Acerca de"></span><span class="text">Acerca de</span></a></li>
+                    <li><a href="#"><span><img src="{{ url_for('static', filename='img/ayuda.svg') }}"
+                                    alt="Ayuda"></span><span class="text">Ayuda</span></a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <header>
+            <div class="logo">
+                <img src="{{url_for('static', filename='img/estnotelogo.svg')}}" alt="Logo">
+            </div>
+            <h1>EstNote</h1>
+            <div class="usuario">
+                <a href=""><img src="{{url_for('static', filename='img/usuario.svg')}}" alt=""></a>
+            </div>
+        </header>
+        <main>
+            <h2>Formulario para agregar calificación</h2>
+
+            <div style="color: rgb(13, 255, 0);">
+                {% if mensaje %}
+                {{mensaje}}
+                {% endif %}
+            </div>
+
+            <form action="{{ url_for('agregarCalificacion', id_materia=id_materia) }}" method="post" class="formulario">
+
+                <label for="titulo">Título de la Calificación:</label>
+                <input type="text" name="titulo">
+
+                <label for="tipo">Tipo:</label>
+                <select name="tipo" id="tipo">
+                    <option value="Tarea">Tarea</option>
+                    <option value="Examen">Examen</option>
+                    <option value="Parcial">Parcial</option>
+                    <option value="Quiz">Quiz</option>
+                    <option value="Proyecto">Proyecto</option>
+                    <option value="Participacion">Participacion</option>
+                    <option value="Exposicion">Exposición</option>
+                    <option value="Taller">Taller</option>
+                    <option value="Autoevaluacion">Autoevaluación</option>
+                    <option value="Coevaluacion">Coevaluación</option>
+                </select>
+
+                <label for="calificacion">Calificación</label>
+                <input type="number" name="calificacion" id="calificacion" min="0" max="5" step="0.1"
+                    placeholder="0.0 a 5.0" required oninput="validarRango(this)">
+
+
+
+                <label for="peso">Peso de la Calificacion en la Materia:</label><br>
+                <input type="range" id="porcentajeMateria" name="peso" min="0" max="100" step="0.1" value="25"
+                    oninput="outputPorcentaje.value = porcentajeMateria.value + '%'">
+                <output id="outputPorcentaje">25%</output>
+
+                <label for="fecha">Fecha:</label>
+                <input type="datetime-local" name="fecha">
+
+                <label for="descripcion">Detalles:</label>
+                <textarea id="descripcion" name="descripcion" rows="4" cols="50"></textarea>
+
+                <label for="estado">Estado de Entrega:</label>
+                <select name="estado" id="estado">
+                    <option value="Entregado">Entregado</option>
+                    <option value="No entregado">No entregado</option>
+                    <option value="Entregado Tarde">Entregado tarde</option>
+                </select>
+
+                <div class="acciones-form">
+                    <button type="submit" class="btn-principal">Agregar Calificación</button>
+                    <a class="btn-secundario" href="{{ url_for('verMateria', id_materia=id_materia) }}">⟵ Volver</a>
+                </div>
+
+            </form>
+        </main>
+
+        <script src="{{url_for('static', filename='scripts/script.js')}}"></script>
+    </div>
+</body>
+
+</html>

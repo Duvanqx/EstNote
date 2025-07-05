@@ -18,14 +18,14 @@
                     <li><a href="{{ url_for('index')}}"><span><img
                                     src="{{ url_for('static', filename='img/inicio.svg') }}" alt="Inicio"></span><span
                                 class="text">Inicio</span></a></li>
-                    <li><a href="{{ url_for('periodo')}}"><span><img
-                                    src="{{ url_for('static', filename='img/periodos.svg') }}"
-                                    alt="Periodos"></span><span class="text">Periodos</span></a></li>
-                    <li><a href="{{ url_for('materias' )}}"><span><img
-                                    src="{{ url_for('static', filename='img/materias.svg') }}"
-                                    alt="Materias"></span><span class="text">Materias</span></a></li>
-                    <li><a href="#"><span><img src="{{ url_for('static', filename='img/calificaciones.svg') }}"
-                                    alt="Calificaciones"></span><span class="text">Calificaciones</span></a></li>
+                    <li><a href="{{ url_for('periodo') }}">
+                            <span><img src="{{ url_for('static', filename='img/materias.svg') }}" alt="Materias"></span>
+                            <span class="text">Gestor Academico</span>
+                        </a></li>
+                    <li><a href="{{ url_for('configuracion') }}"><span><img
+                                    src="{{ url_for('static', filename='img/calificaciones.svg') }}"
+                                    alt="Calificaciones"></span><span class="text">Configuración de
+                                Asignatura</span></a></li>
                     <li><a href="#"><span><img src="{{ url_for('static', filename='img/info.svg')}}"
                                     alt="Acerca de"></span><span class="text">Acerca de</span></a></li>
                     <li><a href="#"><span><img src="{{ url_for('static', filename='img/ayuda.svg') }}"
@@ -46,25 +46,32 @@
         </header>
 
         <main>
+
             <button class="agregar"><a href="{{ url_for('agregarPeriodo') }}">Agregar Periodo</a></button>
+
+            <p>Selecciona un periodo:</p>
 
             <div class="materias-contenedor">
                 {% for p in periodos %}
-                <div class="materia">
+                <div
+                    class="materia {% if p[4] is not none %}{% if p[4] >= 4.5 %}excelente{% elif p[4] >= 4.0 %}alto{% elif p[4] >= 3.0 %}aprobado{% else %}reprobado{% endif %}{% else %}sin-nota{% endif %}">
+                    <a href="{{ url_for('materias', id_periodo=p[0]) }}">
                         <div class="info">
-                            <h3>{{ p[2] }}</h3>
-                            <p><strong>Fecha inicio:</strong> {{ p[3] }} </p>
-                            <p><strong>Fecha fin:</strong> {{ p[4] }} </p>
-                            <p><strong>Resultados final:</strong></p>
+                            <h3>{{ p[1] }}</h3>
+                            <p><strong>Fecha inicio:</strong> {{ p[2] }}</p>
+                            <p><strong>Fecha fin:</strong> {{ p[3] }}</p>
+                            <p><strong>Resultado final:</strong> {% if p[4] is not none %}{{ p[4]|round(1, 'common')
+                                }}{% else %}Sin nota{% endif %}</p>
                         </div>
-
-                        <div class="acciones">
-                            <a href="{{ url_for('editarPeriodo', id_periodo= p[0]) }}">Editar</a>
-                            <a href="{{ url_for('eliminarPeriodo', id_periodo= p[0]) }}">Eliminar</a>
-                        </div>
+                    </a>
+                    <div class="acciones">
+                        <a href="{{ url_for('editarPeriodo', id_periodo=p[0]) }}">Editar</a>
+                        <a href="{{ url_for('eliminarPeriodo', id_periodo=p[0]) }}">Eliminar</a>
+                    </div>
                 </div>
                 {% endfor %}
             </div>
+
         </main>
 
         <script src="{{url_for('static', filename='scripts/script.js')}}"></script>

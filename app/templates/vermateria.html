@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EstNote - {{ materia[1] }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}">
+</head>
+
+<body>
+    <div class="contenido">
+
+
+        <div id="menu" class="menu collapsed">
+            <button id="boton_menu">☰</button>
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('index') }}">
+                            <span><img src="{{ url_for('static', filename='img/inicio.svg') }}" alt="Inicio"></span>
+                            <span class="text">Inicio</span></a>
+                    </li>
+                    <li><a href="{{ url_for('periodo') }}">
+                            <span><img src="{{ url_for('static', filename='img/materias.svg') }}" alt="Materias"></span>
+                            <span class="text">Gestor Académico</span></a>
+                    </li>
+                    <li><a href="{{ url_for('configuracion') }}">
+                            <span><img src="{{ url_for('static', filename='img/calificaciones.svg') }}"
+                                    alt="Calificaciones"></span>
+                            <span class="text">Configuración de Asignatura</span></a>
+                    </li>
+                    <li><a href="#">
+                            <span><img src="{{ url_for('static', filename='img/info.svg') }}" alt="Acerca de"></span>
+                            <span class="text">Acerca de</span></a>
+                    </li>
+                    <li><a href="#">
+                            <span><img src="{{ url_for('static', filename='img/ayuda.svg') }}" alt="Ayuda"></span>
+                            <span class="text">Ayuda</span></a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+
+        <header>
+            <div class="logo">
+                <img src="{{ url_for('static', filename='img/estnotelogo.svg') }}" alt="Logo">
+            </div>
+            <h1>EstNote</h1>
+            <div class="usuario">
+                <a href="#"><img src="{{ url_for('static', filename='img/usuario.svg') }}" alt="Usuario"></a>
+            </div>
+        </header>
+
+
+        <main>
+            <div class="tabla_notas">
+
+
+                <div class="encabezado-tabla">
+                    <h2>{{ materia[1] }}</h2>
+
+                    {# Botón para agregar calificación #}
+                    <button class="agregar">
+                        <a href="{{ url_for('agregarCalificacion', id_materia=id_materia) }}">Agregar</a>
+                    </button>
+                </div>
+
+
+                {% if nota_final is defined %}
+                <div class="nota-final 
+                    {% if nota_final >= 4.5 %} excelente 
+                    {% elif nota_final >= 3.0 %} aprobado 
+                    {% else %} reprobado 
+                    {% endif %}">
+                    Nota final: {{ nota_final }}
+                </div>
+                {% endif %}
+
+                <h3>Calificaciones:</h3>
+
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Tipo</th>
+                            <th>Calificación</th>
+                            <th>Porcentaje</th>
+                            <th>Fecha</th>
+                            <th>Descripción</th>
+                            <th>Estado</th>
+                            <th>Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for c in calificacion %}
+                        <tr class="{% if c.3 >= 4.5 %}excelente {% elif c.3 >= 4.0 %}alto{% elif c.3 >= 3.0 %}aprobado{% else %}reprobado{% endif %}">
+                            <td data-label="Titulo">{{ c[1] }}</td>
+                            <td data-label="Tipo">{{ c[2] }}</td>
+                            <td data-label="Nota">{{ c[3] }}</td>
+                            <td data-label="Porcentaje">{{ c[4] }}%</td>
+                            <td data-label="Fecha">{{ c[5] }}</td>
+                            <td data-label="Descripción">{{ c[6] }}</td>
+                            <td data-label="Estado">{{ c[7] }}</td>
+                            <td data-label="Acciones">
+                                <button class="editar">
+                                    <a href="{{ url_for('editarCalificacion', id_calificacion=c[0]) }}">Editar</a>
+                                </button>
+                                <button class="eliminar">
+                                    <a href="{{ url_for('eliminarCalificacion', id_calificacion=c[0]) }}">Eliminar</a>
+                                </button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+            </div>
+        </main>
+
+        <script src="{{ url_for('static', filename='scripts/script.js') }}"></script>
+    </div>
+</body>
+
+</html>

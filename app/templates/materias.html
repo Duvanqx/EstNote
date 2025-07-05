@@ -18,14 +18,14 @@
                     <li><a href="{{ url_for('index')}}"><span><img
                                     src="{{ url_for('static', filename='img/inicio.svg') }}" alt="Inicio"></span><span
                                 class="text">Inicio</span></a></li>
-                    <li><a href="{{ url_for('periodo')}}"><span><img
-                                    src="{{ url_for('static', filename='img/periodos.svg') }}"
-                                    alt="Periodos"></span><span class="text">Periodos</span></a></li>
-                    <li><a href="{{ url_for('materias' )}}"><span><img
-                                    src="{{ url_for('static', filename='img/materias.svg') }}"
-                                    alt="Materias"></span><span class="text">Materias</span></a></li>
-                    <li><a href="#"><span><img src="{{ url_for('static', filename='img/calificaciones.svg') }}"
-                                    alt="Calificaciones"></span><span class="text">Calificaciones</span></a></li>
+                    <li><a href="{{ url_for('periodo') }}">
+                            <span><img src="{{ url_for('static', filename='img/materias.svg') }}" alt="Materias"></span>
+                            <span class="text">Gestor Academico</span>
+                        </a></li>
+                    <li><a href="{{ url_for('configuracion') }}"><span><img
+                                    src="{{ url_for('static', filename='img/calificaciones.svg') }}"
+                                    alt="Calificaciones"></span><span class="text">Configuración de
+                                Asignatura</span></a></li>
                     <li><a href="#"><span><img src="{{ url_for('static', filename='img/info.svg')}}"
                                     alt="Acerca de"></span><span class="text">Acerca de</span></a></li>
                     <li><a href="#"><span><img src="{{ url_for('static', filename='img/ayuda.svg') }}"
@@ -47,37 +47,28 @@
 
         <main>
 
-            <form class="filtro-periodos" action="{{ url_for('verPeriodo') }}" method="get">
-                <select name="periodo_id">
-                    <option value="">Todos los periodos</option>
-                    {% for periodo in periodos %}
-                    <option value="{{ periodo[0] }}">{{ periodo[2] }}</option>
-                    {% endfor %}
-                </select>
-                <button type="submit">Filtrar</button>
-            </form>
+            <p>Selecciona una Materia:</p>
 
-            <button class="agregar"><a href="{{ url_for('agregarProfesor')  }}">Agregar Profesor</a></button>
-            <button class="agregar"><a href="{{ url_for('agregarMaterias') }}">Agregar Materia</a></button>
             <div class="materias-contenedor">
                 {% for m in materias %}
-                <div class="materia">
-                    <a href="#">
+                <div class="materia {% if m[5] is not none %}{% if m[5] >= 4.5 %}excelente{% elif m[5] >= 4.0 %}alto{% elif m[5] >= 3.0 %}aprobado{% else %}reprobado{% endif %}{% else %}sin-nota{% endif %}">
+                    <a href="{{ url_for('verMateria', id_materia=m[0]) }}">
                         <div class="info">
                             <h3>{{ m[1] }}</h3>
                             <p><strong>Área:</strong> {{ m[3] }}</p>
                             <p><strong>Porcentaje en el periodo:</strong> {{ m[2] }}%</p>
                             <p><strong>Profesor(es):</strong> {{ m[4] }}</p>
-                            <p><strong>Resultados final:</strong></p>
-                        </div>
-                        <div class="acciones">
-                            <a href="{{ url_for('editarMateria', id_materia=m[0]) }}">Editar</a>
-                            <a href="{{ url_for('eliminarMateria', id_materia=m[0]) }}">Eliminar</a>
+                            <p><strong>Resultado final:</strong> {{ m[5]|round(1, 'common') if m[5] is not none else 'Sin nota' }}</p>
                         </div>
                     </a>
+                    <div class="acciones">
+                        <a href="{{ url_for('editarMateria', id_materia=m[0]) }}">Editar</a>
+                        <a href="{{ url_for('eliminarMateria', id_materia=m[0]) }}">Eliminar</a>
+                    </div>
                 </div>
                 {% endfor %}
             </div>
+
         </main>
 
         <script src="{{url_for('static', filename='scripts/script.js')}}"></script>

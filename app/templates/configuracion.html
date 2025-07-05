@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EstNote - Editar Periodo</title>
+    <title>EstNote - Configuración Asignatura</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css')}}">
 </head>
 
@@ -22,8 +22,10 @@
                             <span><img src="{{ url_for('static', filename='img/materias.svg') }}" alt="Materias"></span>
                             <span class="text">Gestor Academico</span>
                         </a></li>
-                    <li><a href="{{ url_for('configuracion') }}"><span><img src="{{ url_for('static', filename='img/calificaciones.svg') }}"
-                                    alt="Calificaciones"></span><span class="text">Configuración de Asignatura</span></a></li>
+                    <li><a href="{{ url_for('configuracion') }}"><span><img
+                                    src="{{ url_for('static', filename='img/calificaciones.svg') }}"
+                                    alt="Calificaciones"></span><span class="text">Configuración de
+                                Asignatura</span></a></li>
                     <li><a href="#"><span><img src="{{ url_for('static', filename='img/info.svg')}}"
                                     alt="Acerca de"></span><span class="text">Acerca de</span></a></li>
                     <li><a href="#"><span><img src="{{ url_for('static', filename='img/ayuda.svg') }}"
@@ -44,20 +46,31 @@
         </header>
 
         <main>
-            <h2>Formulario para editar periodo o semestre</h2>
-            <form action="{{ url_for('editarPeriodo', id_periodo=periodo[0]) }}" method="post" class="formulario">
-                <label for="nombre">Nombre:</label>
-                <input type="text" name="nombre" value="{{ periodo[2] }}">
 
-                <label for="inicio">Fecha inicio:</label>
-                <input type="date" name="inicio" value="{{ periodo[3] }}">
-
-                <label for="fin">Fecha fin:</label>
-                <input type="date" name="fin" value="{{ periodo[4] }}">
+            <button class="agregar"><a href="{{ url_for('agregarProfesor')  }}">Agregar Profesor</a></button>
+            <button class="agregar"><a href="{{ url_for('agregarMaterias') }}">Agregar Materia</a></button>
 
 
-                <button type="submit">Editar Periodo</button>
-            </form>
+            <div class="tabla_notas">
+                <h2>Lista de Profesores y sus Materias Asignadas</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nombre del Profesor</th>
+                            <th>Total de Materias</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for profesor in profesores %}
+                        <tr>
+                            <td data-label="Nombre del Profesor:">{{ profesor[1] }}</td>
+                            <td data-label="Materias">{{ profesor[2] }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
         </main>
 
         <script src="{{url_for('static', filename='scripts/script.js')}}"></script>
