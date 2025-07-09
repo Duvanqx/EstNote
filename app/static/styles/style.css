@@ -17,7 +17,6 @@ a {
 }
 
 
-
 /* === Sidebar === */
 .menu {
   position: fixed;
@@ -105,7 +104,8 @@ a {
   background-color: transparent;
 }
 
-/* === Contenido Principal === */
+
+/* === Contenido Principal y Header === */
 .contenido {
   margin-left: 60px;
   padding: 20px 30px;
@@ -153,6 +153,8 @@ header {
   border-color: #f9d71c;
 }
 
+
+/* === Main === */
 main {
   background-color: white;
   padding: 30px;
@@ -175,82 +177,23 @@ main h2 {
   text-align: center;
 }
 
-main p,
-.formulario label,
-.formulario,
-.filtro-periodos select,
-.filtro-periodos button[type="submit"],
-.formulario button[type="submit"] {
-  font-size: 1rem;
-  font-weight: 600;
-}
-
-main ul {
-  list-style: disc inside;
-  padding-left: 20px;
-  color: #555;
-}
-
-main ul li {
-  margin-bottom: 8px;
-}
-
 .Dividir {
   height: 2px;
   background-color: #ddd;
   margin: 30px 0;
 }
 
-.banner {
-  width: 100%;
-  max-width: 600px;
-  display: block;
-  margin: 1.5em auto;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgb(0 0 0 / 0.1);
-}
 
-.auth-buttons {
-  margin: 20px 0;
-  display: flex;
-  gap: 20px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.auth-buttons h2 {
-  flex-basis: 100%;
-  text-align: center;
-  margin-bottom: 15px;
-  font-weight: 500;
-  color: #444;
-}
-
-.auth-buttons a,
+/* === Formularios === */
+.formulario,
+.formulario label,
+.formulario select,
+.formulario input[type="text"],
 .formulario button[type="submit"],
-
-.agregar {
-  padding: 12px 24px;
-  background-color: #1e1e2f;
-  color: white;
-  border-radius: 6px;
-  transition: background-color 0.3s, box-shadow 0.3s;
-  font-weight: 600;
+.filtro-periodos select,
+.filtro-periodos button[type="submit"] {
   font-size: 1rem;
-  border: none;
-  cursor: pointer;
-  text-align: center;
-  user-select: none;
-}
-
-.auth-buttons a:hover,
-.formulario button[type="submit"]:hover,
-.filtro-periodos button[type="submit"]:hover,
-.agregar:hover {
-  background-color: #f9d71c;
-  color: #1e1e2f;
-  box-shadow: 0 6px 12px rgba(249, 215, 28, 0.5);
-  text-decoration: none;
+  font-weight: 600;
 }
 
 .formulario {
@@ -290,21 +233,14 @@ main ul li {
   color: #1e1e2f;
 }
 
-.formulario label[for="porcentajeMateria"]+br {
-  display: none;
-}
 
+/* === Materias === */
 .materias-contenedor {
   display: flex;
   flex-direction: column;
   gap: 20px;
   align-items: center;
   margin-top: 30px;
-}
-
-.materias-contenedor a {
-  width: 100%;
-  max-width: 600px;
 }
 
 .materia {
@@ -339,16 +275,8 @@ main ul li {
   color: #555;
 }
 
-.materia .info {
-  flex-grow: 1;
-}
 
-.materia .acciones {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
+/* === Tablas === */
 .tabla_notas {
   margin-bottom: 20px;
 }
@@ -370,6 +298,17 @@ main ul li {
   color: white;
 }
 
+.tabla_notas button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  margin: 2px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: white;
+  transition: background-color 0.3s;
+}
 
 .tabla_notas button.editar {
   background-color: #1976d2;
@@ -387,110 +326,34 @@ main ul li {
   background-color: #9a0007;
 }
 
-.tabla_notas button {
-  padding: 6px 12px;
-  border: none;
-  border-radius: 4px;
-  margin: 2px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  cursor: pointer;
-  color: white;
-  transition: background-color 0.3s;
-}
 
-.tabla_notas button a {
-  color: inherit;
-  text-decoration: none;
-  display: block;
-}
-
-.encabezado-tabla {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.encabezado-tabla h2 {
-  margin: 0;
-  font-size: 1.8rem;
-}
-
-.tabla_notas h3 {
-  margin-top: 10px;
-  font-weight: bold;
-  color: #333;
-}
-
-/* Estilo general para nota-final */
-.nota-final {
-  font-weight: bold;
-  padding: 12px 16px;
-  border-radius: 8px;
-  margin: 8px 0;
-  display: block;
-  font-size: 1rem;
-  text-align: center;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08);
-}
-
-/* Colores por estado */
-.excelente {
-  background-color: #c8f7c5;
-  color: #256029;
-  border-left: 6px solid #28a745;
-}
-
-
-.alto {
-  background-color: #d7f9e9;
-  color: #2b7a52;
-  border-left: 6px solid #3ddc84;
-}
-
-
-.aprobado {
-  background-color: #fff8c6;
-  color: #7a6300;
-  border-left: 6px solid #ffc107;
-}
-
-.reprobado {
-  background-color: #f9c5c5;
-  color: #911c1c;
-  border-left: 6px solid #dc3545;
-}
-
-.acciones-form {
-  display: flex;
-  gap: 14px;
-  flex-wrap: wrap;
-  margin-top: 20px;
-  align-items: center;
-}
-
-/* Botón importante */
-.btn-principal {
-  padding: 12px 28px;
+/* === Botones === */
+.btn-principal,
+.agregar,
+.auth-buttons a,
+.formulario button[type="submit"] {
+  padding: 12px 24px;
   background-color: #1e1e2f;
   color: white;
-  border: none;
-  border-radius: 8px;
+  border-radius: 6px;
   font-weight: 600;
   font-size: 1rem;
+  border: none;
   cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-  transition: background-color 0.3s, transform 0.2s;
+  transition: background-color 0.3s, box-shadow 0.3s;
+  text-align: center;
+  user-select: none;
 }
 
-.btn-principal:hover {
+.btn-principal:hover,
+.agregar:hover,
+.auth-buttons a:hover,
+.formulario button[type="submit"]:hover {
   background-color: #f9d71c;
   color: #1e1e2f;
-  transform: translateY(-1px);
+  box-shadow: 0 6px 12px rgba(249, 215, 28, 0.5);
 }
 
-/* Enlace secundario */
 .btn-secundario {
   padding: 10px 22px;
   background-color: transparent;
@@ -507,6 +370,58 @@ main ul li {
   border-color: #1e1e2f;
   background-color: #eee;
   color: #000;
+}
+
+
+/* === Perfil Usuario === */
+.perfil-usuario {
+  background: #f3f4f6;
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 600px;
+  margin: auto;
+}
+
+.info-usuario p {
+  font-size: 1.1rem;
+  margin: 0.5rem 0;
+}
+
+.acciones-usuario {
+  margin-top: 1.5rem;
+}
+
+/* Botón: Cerrar sesión */
+.btn.logout {
+  background-color: #e63946; /* Rojo para destacar acción de peligro */
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn.logout:hover {
+  background-color: #d62828; /* Más oscuro al pasar el mouse */
+}
+
+
+/* === Flash Messages === */
+.flashes {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+}
+
+.flashes .error {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 1rem;
+  border-left: 6px solid #dc3545;
+  border-radius: 5px;
+  font-weight: bold;
+  margin-bottom: 1rem;
 }
 
 
@@ -697,6 +612,134 @@ main ul li {
     gap: 10px;
   }
 }
+
+
+.perfil-usuario {
+  background: #f3f4f6;
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 600px;
+  margin: auto;
+}
+
+.info-usuario p {
+  font-size: 1.1rem;
+  margin: 0.5rem 0;
+}
+
+.acciones-usuario {
+  margin-top: 1.5rem;
+}
+
+.btn {
+  display: inline-block;
+  background-color: #2575fc;
+  color: white;
+  text-decoration: none;
+  padding: 0.6rem 1.2rem;
+  margin-right: 1rem;
+  border-radius: 6px;
+  transition: background-color 0.3s;
+}
+
+.btn.logout {
+  background-color: #e63946;
+}
+
+.btn:hover {
+  background-color: #1b5ed9;
+}
+
+.flashes {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0;
+}
+
+.flashes .error {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 1rem;
+    border-left: 6px solid #dc3545;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.auth-buttons {
+    background-color: #f5f7fa;
+    padding: 2rem;
+    border-radius: 12px;
+    text-align: center;
+    margin: 2rem auto;
+    max-width: 600px;
+}
+
+.auth-buttons h2 {
+    margin-bottom: 1rem;
+    font-size: 1.6rem;
+    color: #333;
+}
+
+.auth-buttons p {
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+    color: #555;
+}
+
+.botones-acceso {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.btn {
+    padding: 0.7rem 1.5rem;
+    text-decoration: none;
+    color: white;
+    border-radius: 6px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.btn.registro {
+    background-color: #f9d71c;
+}
+
+.btn.login {
+    background-color: #1e1e2f;
+}
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+.excelente {
+  background-color: #c8f7c5;
+  color: #256029;
+  border-left: 6px solid #28a745;
+}
+
+
+.alto {
+  background-color: #d7f9e9;
+  color: #2b7a52;
+  border-left: 6px solid #3ddc84;
+}
+
+
+.aprobado {
+  background-color: #fff8c6;
+  color: #7a6300;
+  border-left: 6px solid #ffc107;
+}
+
+.reprobado {
+  background-color: #f9c5c5;
+  color: #911c1c;
+  border-left: 6px solid #dc3545;
+}
+
 
 
 

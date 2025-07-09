@@ -22,12 +22,16 @@
                             <span><img src="{{ url_for('static', filename='img/materias.svg') }}" alt="Materias"></span>
                             <span class="text">Gestor Academico</span>
                         </a></li>
-                    <li><a href="{{ url_for('configuracion') }}"><span><img src="{{ url_for('static', filename='img/calificaciones.svg') }}"
-                                    alt="Calificaciones"></span><span class="text">Configuración de Asignatura</span></a></li>
-                    <li><a href="#"><span><img src="{{ url_for('static', filename='img/info.svg')}}"
-                                    alt="Acerca de"></span><span class="text">Acerca de</span></a></li>
-                    <li><a href="#"><span><img src="{{ url_for('static', filename='img/ayuda.svg') }}"
-                                    alt="Ayuda"></span><span class="text">Ayuda</span></a></li>
+                    <li><a href="{{ url_for('configuracion') }}"><span><img
+                                    src="{{ url_for('static', filename='img/calificaciones.svg') }}"
+                                    alt="Calificaciones"></span><span class="text">Configuración de
+                                Asignatura</span></a></li>
+                    <li><a href="{{ url_for('acerca') }}"><span><img
+                                    src="{{ url_for('static', filename='img/info.svg')}}" alt="Acerca de"></span><span
+                                class="text">Acerca de</span></a></li>
+                    <li><a href="{{ url_for('ayuda') }}"><span><img
+                                    src="{{ url_for('static', filename='img/ayuda.svg') }}" alt="Ayuda"></span><span
+                                class="text">Ayuda</span></a></li>
                 </ul>
             </nav>
         </div>
@@ -39,33 +43,58 @@
             </div>
             <h1>EstNote</h1>
             <div class="usuario">
-                <a href=""><img src="{{url_for('static', filename='img/usuario.svg')}}" alt=""></a>
+                <a href="{{ url_for('perfil_usuario') }}">
+                    <img src="{{ url_for('static', filename='img/usuario.svg') }}" alt="Perfil de usuario">
+                </a>
             </div>
         </header>
 
+
         <main>
+
             {% if usuario %}
-            <h2>Hola, {{ usuario }}. ¡Bienvenida a EstNote, la forma más fácil y rápida de visualizar tus
-                calificaciones!</h2>
-            <a href="/logout">Cerrar Sesión</a>
+            <section class="bienvenida">
+                <h2>¡Hola, {{ usuario }}! 👋 Bienvenido a <strong>EstNote</strong>, tu herramienta para visualizar y
+                    gestionar tus calificaciones de forma fácil y rápida.</h2>
+
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                <ul class="flashes">
+                    {% for category, message in messages %}
+                    <li class="{{ category }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                {% endwith %}
+            </section>
+
             {% else %}
-            <div class="auth-buttons">
-                <h2>¿Quieres tener una forma fácil y rápida de visualizar tus calificaciones?</h2>
-                <a href="{{ url_for('registro') }}">Registrarse</a><br>
-                <a href="{{ url_for('login') }}">Iniciar Sesión</a>
-            </div>
+            <section class="auth-buttons">
+                <h2>¡Empieza a organizar tus calificaciones hoy mismo!</h2>
+                <p><strong>EstNote</strong> te ayuda a llevar el control de tus materias, notas y progreso académico de
+                    forma sencilla y rápida.</p>
+
+                <div class="botones-acceso">
+                    <a href="{{ url_for('registro') }}" class="btn registro">Registrarse</a>
+                    <a href="{{ url_for('login') }}" class="btn login">Iniciar sesión</a>
+                </div>
+            </section>
             {% endif %}
 
             <div class="Dividir"></div>
 
-            <p>¿Qué puedes hacer?</Sp>
-            <ul>
-                <li>Agregar y organizar materias</li>
-                <li>Crear y editar tus calificaciones</li>
-                <li>Ver tus calificaciones finales</li>
-                <li>Ser mas ordenado</li>
-            </ul>
+            <section class="funcionalidades">
+                <h3>✨ ¿Qué puedes hacer con <span class="marca">EstNote</span>?</h3>
+                <ul>
+                    <li>📚 <strong>Organizar tus materias:</strong> agrégalas y clasifícalas por periodo.</li>
+                    <li>📝 <strong>Registrar tus calificaciones:</strong> crea, edita y mantén todo actualizado.</li>
+                    <li>📊 <strong>Consultar promedios:</strong> visualiza tu rendimiento por periodo o anual.</li>
+                    <li>✅ <strong>Mejorar tu organización académica:</strong> enfócate en lo que importa.</li>
+                </ul>
+            </section>
+
         </main>
+
 
         <script src="{{url_for('static', filename='scripts/script.js')}}"></script>
 

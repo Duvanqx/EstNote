@@ -11,11 +11,13 @@
 <body>
     <div class="contenedor">
         <div class="logo">
-            <img src="{{url_for('static', filename='img/estnotelogo.svg')}}" alt="logo">
+            <a href="{{ url_for('index') }}"><img src="{{url_for('static', filename='img/estnotelogo.svg')}}" alt="Logo"></a>
             <h2>EstNote</h2>
         </div>
 
         <form action="/registro" method="post" class="formulario">
+
+            <p>Ingresa los siguientes datos para registrarte</p>
 
             <label for="nombres">Nombres:</label>
             <input type="text" name="nombres">

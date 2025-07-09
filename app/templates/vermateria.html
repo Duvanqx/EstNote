@@ -29,11 +29,11 @@
                                     alt="Calificaciones"></span>
                             <span class="text">Configuración de Asignatura</span></a>
                     </li>
-                    <li><a href="#">
+                    <li><a href="{{ url_for('acerca') }}">
                             <span><img src="{{ url_for('static', filename='img/info.svg') }}" alt="Acerca de"></span>
                             <span class="text">Acerca de</span></a>
                     </li>
-                    <li><a href="#">
+                    <li><a href="{{ url_for('ayuda') }}">
                             <span><img src="{{ url_for('static', filename='img/ayuda.svg') }}" alt="Ayuda"></span>
                             <span class="text">Ayuda</span></a>
                     </li>
@@ -44,11 +44,13 @@
 
         <header>
             <div class="logo">
-                <img src="{{ url_for('static', filename='img/estnotelogo.svg') }}" alt="Logo">
+                <img src="{{url_for('static', filename='img/estnotelogo.svg')}}" alt="Logo">
             </div>
             <h1>EstNote</h1>
             <div class="usuario">
-                <a href="#"><img src="{{ url_for('static', filename='img/usuario.svg') }}" alt="Usuario"></a>
+                <a href="{{ url_for('perfil_usuario') }}">
+                    <img src="{{ url_for('static', filename='img/usuario.svg') }}" alt="Perfil de usuario">
+                </a>
             </div>
         </header>
 
@@ -95,7 +97,8 @@
                     </thead>
                     <tbody>
                         {% for c in calificacion %}
-                        <tr class="{% if c.3 >= 4.5 %}excelente {% elif c.3 >= 4.0 %}alto{% elif c.3 >= 3.0 %}aprobado{% else %}reprobado{% endif %}">
+                        <tr
+                            class="{% if c.3 >= 4.5 %}excelente {% elif c.3 >= 4.0 %}alto{% elif c.3 >= 3.0 %}aprobado{% else %}reprobado{% endif %}">
                             <td data-label="Titulo">{{ c[1] }}</td>
                             <td data-label="Tipo">{{ c[2] }}</td>
                             <td data-label="Nota">{{ c[3] }}</td>

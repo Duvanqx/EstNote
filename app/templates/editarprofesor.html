@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EstNote - Periodos</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css')}}">
+    <title>EstNote - Editar Profesor</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='styles/style.css')}}">
 </head>
 
 <body>
@@ -50,26 +50,21 @@
         </header>
 
         <main>
-            <h2>Formulario para agregar periodos o semestres</h2>
-            <form action="/agregar_periodo" method="post" class="formulario">
+            <h2>Formulario para Editar Profesor</h2>
 
-                <div style="color: rgb(13, 255, 0);">
-                    {% if mensaje %}
-                    {{ mensaje }}
-                    {% endif %}
-                </div>
+            <form method="POST" class="formulario">
+                <label>Nombre:</label>
+                <input type="text" name="nombre" value="{{ profesor[2] }}" required>
 
-                <label for="nombre">Nombre:</label>
-                <input type="text" name="nombre">
+                <label>Correo:</label>
+                <input type="email" name="correo" value="{{ profesor[3] }}">
 
-                <label for="inicio">Fecha inicio:</label>
-                <input type="date" name="inicio">
+                <label>Teléfono:</label>
+                <input type="text" name="telefono" value="{{ profesor[4] }}">
 
-                <label for="fin">Fecha fin:</label>
-                <input type="date" name="fin">
-
-                <button type="submit">Agregar Periodo</button>
+                <button type="submit">Guardar Cambios</button>
             </form>
+
         </main>
 
         <script src="{{url_for('static', filename='scripts/script.js')}}"></script>

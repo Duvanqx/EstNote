@@ -26,14 +26,15 @@
                                     src="{{ url_for('static', filename='img/calificaciones.svg') }}"
                                     alt="Calificaciones"></span><span class="text">Configuración de
                                 Asignatura</span></a></li>
-                    <li><a href="#"><span><img src="{{ url_for('static', filename='img/info.svg')}}"
-                                    alt="Acerca de"></span><span class="text">Acerca de</span></a></li>
-                    <li><a href="#"><span><img src="{{ url_for('static', filename='img/ayuda.svg') }}"
-                                    alt="Ayuda"></span><span class="text">Ayuda</span></a></li>
+                    <li><a href="{{ url_for('acerca') }}"><span><img
+                                    src="{{ url_for('static', filename='img/info.svg')}}" alt="Acerca de"></span><span
+                                class="text">Acerca de</span></a></li>
+                    <li><a href="{{ url_for('ayuda') }}"><span><img
+                                    src="{{ url_for('static', filename='img/ayuda.svg') }}" alt="Ayuda"></span><span
+                                class="text">Ayuda</span></a></li>
                 </ul>
             </nav>
         </div>
-
 
         <header>
             <div class="logo">
@@ -41,7 +42,9 @@
             </div>
             <h1>EstNote</h1>
             <div class="usuario">
-                <a href=""><img src="{{url_for('static', filename='img/usuario.svg')}}" alt=""></a>
+                <a href="{{ url_for('perfil_usuario') }}">
+                    <img src="{{ url_for('static', filename='img/usuario.svg') }}" alt="Perfil de usuario">
+                </a>
             </div>
         </header>
 
@@ -51,14 +54,16 @@
 
             <div class="materias-contenedor">
                 {% for m in materias %}
-                <div class="materia {% if m[5] is not none %}{% if m[5] >= 4.5 %}excelente{% elif m[5] >= 4.0 %}alto{% elif m[5] >= 3.0 %}aprobado{% else %}reprobado{% endif %}{% else %}sin-nota{% endif %}">
+                <div
+                    class="materia {% if m[5] is not none %}{% if m[5] >= 4.5 %}excelente{% elif m[5] >= 4.0 %}alto{% elif m[5] >= 3.0 %}aprobado{% else %}reprobado{% endif %}{% else %}sin-nota{% endif %}">
                     <a href="{{ url_for('verMateria', id_materia=m[0]) }}">
                         <div class="info">
                             <h3>{{ m[1] }}</h3>
                             <p><strong>Área:</strong> {{ m[3] }}</p>
                             <p><strong>Porcentaje en el periodo:</strong> {{ m[2] }}%</p>
                             <p><strong>Profesor(es):</strong> {{ m[4] }}</p>
-                            <p><strong>Resultado final:</strong> {{ m[5]|round(1, 'common') if m[5] is not none else 'Sin nota' }}</p>
+                            <p><strong>Resultado final:</strong> {{ m[5]|round(1, 'common') if m[5] is not none else
+                                'Sin nota' }}</p>
                         </div>
                     </a>
                     <div class="acciones">

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EstNote - Periodos</title>
+    <title>EstNote - Ayuda</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css')}}">
 </head>
 
@@ -50,27 +50,45 @@
         </header>
 
         <main>
-            <h2>Formulario para agregar periodos o semestres</h2>
-            <form action="/agregar_periodo" method="post" class="formulario">
+            <h1>Centro de Ayuda</h1>
+            <div class="Dividir"></div>
 
-                <div style="color: rgb(13, 255, 0);">
-                    {% if mensaje %}
-                    {{ mensaje }}
-                    {% endif %}
-                </div>
+            <h2>Preguntas Frecuentes</h2>
+            <ul>
+                <li>
+                    <strong>¿Cómo registro una materia?</strong><br>
+                    Primero ve a <em>"Gestor Académico"</em> y haz clic en <em>"Agregar Periodo"</em> para completar el
+                    formulario.
+                    Luego dirígete a <em>"Configuración de Asignatura"</em>, haz clic en <em>"Agregar Profesor"</em> y
+                    completa ese formulario.
+                    Finalmente, regresa y haz clic en <em>"Agregar Materia"</em> para finalizar el registro.
+                </li>
+                <li>
+                    <strong>¿Cómo ingreso mis calificaciones?</strong><br>
+                    Dentro de cada materia, selecciona la asignatura correspondiente y haz clic en <em>"Agregar
+                        Calificación"</em>.
+                </li>
+                <li>
+                    <strong>¿Qué significa resultado final?</strong><br>
+                    Es el promedio ponderado de tus calificaciones, calculado según el porcentaje asignado a cada una.
+                </li>
+                <li>
+                    <strong>¿Cómo edito o elimino una nota?</strong><br>
+                    En la tabla de calificaciones, haz clic en los botones <em>"Editar"</em> o <em>"Eliminar"</em>
+                    correspondientes a la fila deseada.
+                </li>
+            </ul>
 
-                <label for="nombre">Nombre:</label>
-                <input type="text" name="nombre">
-
-                <label for="inicio">Fecha inicio:</label>
-                <input type="date" name="inicio">
-
-                <label for="fin">Fecha fin:</label>
-                <input type="date" name="fin">
-
-                <button type="submit">Agregar Periodo</button>
-            </form>
+            <h2>¿Necesitas más ayuda?</h2>
+            <p>
+                Si no encuentras la respuesta que buscas, puedes escribirnos a:
+                <strong>ayuda@teamnova.com</strong>
+            </p>
         </main>
+
+
+
+
 
         <script src="{{url_for('static', filename='scripts/script.js')}}"></script>
 

@@ -26,10 +26,12 @@
                                     src="{{ url_for('static', filename='img/calificaciones.svg') }}"
                                     alt="Calificaciones"></span><span class="text">Configuración de
                                 Asignatura</span></a></li>
-                    <li><a href="#"><span><img src="{{ url_for('static', filename='img/info.svg')}}"
-                                    alt="Acerca de"></span><span class="text">Acerca de</span></a></li>
-                    <li><a href="#"><span><img src="{{ url_for('static', filename='img/ayuda.svg') }}"
-                                    alt="Ayuda"></span><span class="text">Ayuda</span></a></li>
+                    <li><a href="{{ url_for('acerca') }}"><span><img
+                                    src="{{ url_for('static', filename='img/info.svg')}}" alt="Acerca de"></span><span
+                                class="text">Acerca de</span></a></li>
+                    <li><a href="{{ url_for('ayuda') }}"><span><img
+                                    src="{{ url_for('static', filename='img/ayuda.svg') }}" alt="Ayuda"></span><span
+                                class="text">Ayuda</span></a></li>
                 </ul>
             </nav>
         </div>
@@ -40,9 +42,12 @@
             </div>
             <h1>EstNote</h1>
             <div class="usuario">
-                <a href=""><img src="{{url_for('static', filename='img/usuario.svg')}}" alt=""></a>
+                <a href="{{ url_for('perfil_usuario') }}">
+                    <img src="{{ url_for('static', filename='img/usuario.svg') }}" alt="Perfil de usuario">
+                </a>
             </div>
         </header>
+        
         <main>
             <h2>Formulario para editar calificación</h2>
 
@@ -74,8 +79,8 @@
 
 
                 <label for="peso">Peso de la Calificacion en la Materia:</label><br>
-                <input type="range" id="porcentajeMateria" name="peso" min="0" max="100" step="0.1" value="{{ calificaciones[6] }}"
-                    oninput="outputPorcentaje.value = porcentajeMateria.value + '%'">
+                <input type="range" id="porcentajeMateria" name="peso" min="0" max="100" step="0.1"
+                    value="{{ calificaciones[6] }}" oninput="outputPorcentaje.value = porcentajeMateria.value + '%'">
                 <output id="outputPorcentaje">{{ calificaciones[6] }}</output>
 
                 <label for="fecha">Fecha:</label>

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EstNote - Periodos</title>
+    <title>EstNote - Usuario</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css')}}">
 </head>
 
@@ -50,26 +50,20 @@
         </header>
 
         <main>
-            <h2>Formulario para agregar periodos o semestres</h2>
-            <form action="/agregar_periodo" method="post" class="formulario">
+            <section class="perfil-usuario">
+                <h2>👤 Perfil de Usuario</h2>
 
-                <div style="color: rgb(13, 255, 0);">
-                    {% if mensaje %}
-                    {{ mensaje }}
-                    {% endif %}
+                <div class="info-usuario">
+                    <p><strong>Nombres:</strong> {{ usuario }}</p>
+                    <p><strong>Correo:</strong> {{ correo }}</p>
+                    <p><strong>Teléfono:</strong> {{ telefono }}</p>
+
                 </div>
 
-                <label for="nombre">Nombre:</label>
-                <input type="text" name="nombre">
-
-                <label for="inicio">Fecha inicio:</label>
-                <input type="date" name="inicio">
-
-                <label for="fin">Fecha fin:</label>
-                <input type="date" name="fin">
-
-                <button type="submit">Agregar Periodo</button>
-            </form>
+                <div class="acciones-usuario">
+                    <a href="{{ url_for('logout') }}" class="btn logout">🔒 Cerrar sesión</a>
+                </div>
+            </section>
         </main>
 
         <script src="{{url_for('static', filename='scripts/script.js')}}"></script>

@@ -1,8 +1,7 @@
-from flask import Flask, render_template, redirect, url_for, session
+from flask import Flask, render_template, redirect, url_for, session, flash
 from flask_mysqldb import MySQL
 from flask import request
 from werkzeug.security import generate_password_hash , check_password_hash
-from datetime import datetime
 
 app = Flask(__name__)
 app.secret_key = 'clave_secreta_segura'
@@ -195,7 +194,35 @@ def agregarProfesor():
         return redirect(url_for('configuracion'))
     return render_template("agregarprofesor.html")
 
-#Calificaciones
+@app.route('/editar_profesor/<int:id_profesor>', methods = ['POST', 'GET'])
+def editarProfesor(id_profesor):
+    cursor = mysql.connection.cursor()
+    cursor.execute("SELECT * FROM profesores WHERE id_usuario = %s AND id_profesor = %s",(session['usuario_id'],id_profesor))
+    profesor = cursor.fetchone()
+
+    if not profesor:
+        return "Profesor no encontrado o acceso no autorizado", 404
+
+    if request.method == 'POST':
+        nombre = request.form['nombre']
+        correo = request.form['correo']
+        telefono = request.form['telefono']
+
+        cursor.execute("UPDATE profesores SET nombre = %s, correo = %s, telefono = %s WHERE id_profesor = %s",(nombre, correo, telefono, id_profesor))
+        mysql.connection.commit()
+        cursor.close()
+        return redirect(url_for('configuracion'))
+    return render_template("editarprofesor.html", profesor=profesor)
+
+@app.route('/eliminar_profesor/<int:id_profesor>')
+def eliminarProfesor(id_profesor):
+    cursor = mysql.connection.cursor()
+    cursor.execute("DELETE FROM profesores WHERE id_profesor = %s",(id_profesor,))
+    mysql.connection.commit()
+    cursor.close()
+    return redirect(url_for('configuracion'))
+
+#Calificacioness
 
 @app.route('/ver_materia/<int:id_materia>')
 def verMateria(id_materia):
@@ -462,7 +489,40 @@ def editarMateria(id_materia):
     return render_template('editarmateria.html', materia=materia, profesores=profesores)
 
 
-#Cerrar Sesión
+
+#Acerca de y Ayuda
+
+@app.route('/acerca')
+def acerca():
+    return render_template('acerca.html', usuario=session.get('usuario'))
+
+@app.route('/ayuda')
+def ayuda():
+    return render_template('ayuda.html', usuario=session.get('usuario'))
+
+
+
+#Usuario y Cerrar Sesión
+
+@app.route('/perfil')
+def perfil_usuario():
+    if 'usuario_id' not in session:
+        return redirect(url_for('login'))
+
+    cursor = mysql.connection.cursor()
+    cursor.execute("SELECT nombres, correo, telefono FROM usuarios WHERE id_usuario = %s", (session['usuario_id'],))
+    data = cursor.fetchone()
+
+    if data:
+        return render_template('usuario.html',
+                               usuario=data[0],
+                               correo=data[1],
+                               telefono=data[2])
+    else:
+        flash("No se encontró el perfil del usuario.", "error")
+        return redirect(url_for('index'))  # O a otra página que tenga sentido
+
+
 
 @app.route('/logout')
 def logout():
@@ -471,5 +531,5 @@ def logout():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0',port=8000, debug=True)
 
